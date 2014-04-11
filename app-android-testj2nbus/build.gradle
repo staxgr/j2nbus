@@ -1,0 +1,84 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    classpath 'com.jimdo.gradle:gradle-apt-plugin:0.2-SNAPSHOT'
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.9.+'
+    }
+}
+apply plugin: 'android'
+apply plugin: 'apt'
+
+repositories {
+        mavenCentral()
+}
+
+configurations {
+    annotationproccess
+}
+
+dependencies {
+    apt ':j2nbus'
+    compile project(':j2nbus')
+    compile fileTree(dir: 'libs', include: 'native-libs.jar')
+    annotationproccess project(':j2nbus')
+}
+
+afterEvaluate { project ->
+    android.vari.each { variant ->
+
+        variant.javaCompile.options.compilerArgs += [
+                '-classpath', configurations.compile.asPath,
+                '-processorpath', configurations.annotationproccess.asPath,
+                '-processor', 'se.tap2.j2nbus.J2NAnnotationProcessor',
+                "-AoutDir=${projectDir}/jni/j2nbus-gen"
+        ]
+
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// This is how we can add so files to project using gradle as a workaround awaiting official support
+task nativeLibsToJar(
+        type: Zip,
+        description: 'create a jar archive of the native libs') {
+    destinationDir file("libs")
+    baseName 'native-libs'
+    extension 'jar'
+    from fileTree(dir: 'libs', include: '**/*.so')
+    into 'lib/'
+
+}
+tasks.withType(Compile) {
+    compileTask -> compileTask.dependsOn(nativeLibsToJar)
+}
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "19.0.3"
+
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 16
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:19.+'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
