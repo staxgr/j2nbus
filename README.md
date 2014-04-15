@@ -23,7 +23,7 @@ public class Blurb {
 
 Now when you build your java project, j2nbus will use annotation processing to automatically create the same class in C++ for you.
 
-Add some code to publish the data from java:
+You'll need some code to publish the data from java:
 
 ```java
 System.loadLibrary("<your cpp library>");
