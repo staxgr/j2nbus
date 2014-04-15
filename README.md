@@ -57,4 +57,4 @@ void initBus(J2NBus* bus) {
 
 ```
 
-No more C++ code is needed. jnbus will init JNI for you and export all JNI interfaces neccessary.
+No more C++ code is needed. j2nbus will init JNI for you and export all JNI interfaces neccessary.
