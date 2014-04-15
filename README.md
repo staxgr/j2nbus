@@ -21,7 +21,7 @@ public class Blurb {
 }
 ```
 
-Now when you build your java project, j2nbus will automatically create the same class in C++ for you.
+Now when you build your java project, j2nbus will use annotation processing to automatically create the same class in C++ for you.
 
 Add some code to publish the data from java:
 
@@ -58,3 +58,5 @@ void initBus(J2NBus* bus) {
 ```
 
 No more C++ code is needed. j2nbus will init JNI for you and export all JNI interfaces neccessary.
+
+Have a look at 'app-android-testj2nbus' for a complete example including Cpp make files and full gradle configuration.
