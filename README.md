@@ -23,7 +23,18 @@ public class Blurb {
 
 Now when you build your java project, j2nbus will automatically create the same class in C++ for you.
 
-All you need to do in C++ to receive the data is:
+Add some code to publish the data from java:
+
+```java
+System.loadLibrary("<your cpp library>");
+
+J2NBus bus = J2NBus.getBus();
+Blurb blurb = new Blurb();
+blurb.text = "hello from java";
+bus.post(blurb);
+```
+
+All you need to do now in C++ to receive the data is:
 
 ```Cpp
 // Include j2nbus and your generated class
