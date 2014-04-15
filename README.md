@@ -1,7 +1,7 @@
 j2nbus
 ======
 
-j2nbus is a bus alternative to JNI for communication between Java and C++ in the same process. It Supports Android and works with Gradle.
+j2nbus is a bus alternative to JNI for communication between Java and C++ in the same process. It supports Android and works with Gradle.
 
 j2nbus works by automatically translating simple Java data classes to C++ and making them availabe to subscribe to and publish from both Java and C++.
 
