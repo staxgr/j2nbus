@@ -1,1 +1,13 @@
 apply plugin: 'java'
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file:///Users/antongravestam/.gradlemaven/myrepo/android")
+            pom.groupId = 'se.tap2'
+            pom.artifactId = 'j2nbus'
+            pom.version = '0.0.1'
+        }
+    }
+}
